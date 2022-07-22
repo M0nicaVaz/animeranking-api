@@ -12,13 +12,14 @@ const app = express();
 app.use(express.json());
 app.use(routes);
 
-app.use((err, req, res, next) => {
-  if (err instanceof AppError) {
-    return res.status(err.statusCode).json({
+app.use((error, request, response, next) => {
+  if (error instanceof AppError) {
+    return response.status(error.statusCode).json({
       status: 'error',
-      message: err.message,
+      message: error.message,
     });
   }
+
   console.error(error);
 
   return response.status(500).json({
@@ -27,7 +28,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-const PORT = 3000;
+const PORT = 3333;
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
