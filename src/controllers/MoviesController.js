@@ -15,7 +15,7 @@ class MoviesController {
     if (tags.length > 0) {
       const tagsInsert = tags.map((name) => {
         return {
-          note_id,
+          movie_id,
           name,
           user_id,
         };
