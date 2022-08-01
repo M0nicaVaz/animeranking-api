@@ -1,6 +1,6 @@
 const knex = require('../database/knex');
 
-class MoviesController {
+class AnimesController {
   async create(req, res) {
     const { title, description, rating, tags } = req.body;
     const user_id = req.user.id;
@@ -72,4 +72,4 @@ class MoviesController {
   }
 }
 
-module.exports = MoviesController;
+module.exports = AnimesController;

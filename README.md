@@ -2,4 +2,4 @@
 
 ---
 
-This is the backend for a movie application.
+This is the backend for Ranking Animes.
