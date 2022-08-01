@@ -1,6 +1,6 @@
 const { Router } = require('express');
 
-const AnimesController = require('../controllers/animesController');
+const AnimesController = require('../controllers/AnimesController');
 const ensureAuthenticated = require('../middlewares/ensureAuthenticated');
 
 const animesRoutes = Router();
