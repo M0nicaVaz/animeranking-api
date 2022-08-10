@@ -9,6 +9,7 @@ const animesController = new AnimesController();
 
 animesRoutes.use(ensureAuthenticated);
 
+animesRoutes.put('/:id', animesController.update);
 animesRoutes.post('/', animesController.create);
 animesRoutes.get('/', animesController.index);
 animesRoutes.get('/:id', animesController.show);

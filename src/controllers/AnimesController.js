@@ -1,4 +1,5 @@
 const knex = require('../database/knex');
+const AppError = require('../utils/AppError');
 
 class AnimesController {
   async create(req, res) {
@@ -69,6 +70,21 @@ class AnimesController {
     await knex('movies').where({ id }).delete();
 
     return res.json();
+  }
+
+  async update(req, res) {
+    const { title, description, rating } = req.body;
+    const { id } = req.params;
+
+    const movie = await knex('movies').where({ id: id }).first();
+
+    movie.title = title ?? movie.title;
+    movie.description = description ?? movie.description;
+    movie.rating = rating ?? movie.rating;
+
+    await knex('movies').update(movie).where({ id: id });
+
+    return res.json(movie);
   }
 }
 
