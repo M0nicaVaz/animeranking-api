@@ -73,18 +73,36 @@ class AnimesController {
   }
 
   async update(req, res) {
-    const { title, description, rating } = req.body;
+    const { title, description, rating, tags } = req.body;
     const { id } = req.params;
-
+    const user_id = req.user.id;
     const movie = await knex('movies').where({ id: id }).first();
 
-    movie.title = title ?? movie.title;
-    movie.description = description ?? movie.description;
-    movie.rating = rating ?? movie.rating;
+    movie.title = title.length === 0 ? movie.title : title;
+    movie.description =
+      description.length === 0 ? movie.description : description;
+
+    movie.rating = rating.length === 0 ? movie.rating : rating;
 
     await knex('movies').update(movie).where({ id: id });
+    await knex('tags').where('movie_id', id).del();
 
-    return res.json(movie);
+    if (tags.length > 0) {
+      const tagsInsert = tags.map((name) => {
+        return {
+          movie_id: id,
+          name,
+          user_id,
+        };
+      });
+
+      await knex('tags').insert(tagsInsert);
+    }
+
+    return res.json({
+      ...movie,
+      tags,
+    });
   }
 }
 
